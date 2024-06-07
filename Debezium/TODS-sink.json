@@ -1,0 +1,24 @@
+﻿{
+    "name": "TODS-sink",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "topics.regex": "transact.public.tafj(.*)",
+	      "table.name.format": "${topic}",
+        "connection.url": "jdbc:sqlserver://host.docker.internal:31433;databaseName=T24_JSON_CDC;encrypt=true;trustServerCertificate=true;",
+        "connection.integratedSecurity": "false",
+        "connection.user": "sa",
+        "connection.password": "Test1234!",
+        
+        "transforms": "unwrap,changeTopicName",                                                  
+        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+	      "transforms.changeTopicName.type":"org.apache.kafka.connect.transforms.RegexRouter",
+        "transforms.changeTopicName.regex":"transact.public.(.*)",
+	      "transforms.changeTopicName.replacement":"T24_JSON_CDC.dbo.$1",
+
+        "auto.create": "true",                                                   
+        "insert.mode": "upsert",                                                 
+        "pk.fields": "recid",                                                       
+        "pk.mode": "record_value"                                                
+    }
+}

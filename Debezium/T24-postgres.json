@@ -1,0 +1,24 @@
+﻿{
+  "name": "T24-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "database.hostname": "host.docker.internal",
+    "database.port": "5432",
+    "database.user": "yuri",
+    "database.password": "Test1234",
+    "database.dbname": "Transact",
+    "topic.prefix": "transact",
+    "plugin.name": "pgoutput",
+    "signal.data.collection": "public.debezium_signal",
+    "schema.include.list": "public",
+    "table.include.list": 
+	    "
+	    public.FBNK_CUSTOMER,
+	    public.FBNK_ACCOUNT,
+	    public.FBNK_STMT_ENTRY,
+	    public.FBNK_CATEG_ENTRY,
+	    public.FBNK_RE_CONSOL_SPEC000
+	    "
+  }
+}
